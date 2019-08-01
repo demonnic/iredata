@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Logged in",
+    "patterns": [
+      {
+        "pattern": "Password correct. Welcome to (\\w+).",
+        "type": "regex"
+      }
+    ]
+  },
+  {
+    "name": "Prompt",
+    "patterns": [{"type": "prompt"}]
+  }
+]
