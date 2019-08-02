@@ -1,7 +1,34 @@
 iredata.skillFunctions = iredata.skillFunctions or {}
 iredata.skills = iredata.skills or {}
 iredata.skills.groups = iredata.skills.groups or {}
-
+iredata.skillFunctions.miniskills = {}
+iredata.skillFunctions.miniskills.Imperian = {
+	'evasion'
+}
+iredata.skillFunctions.miniskills.Achaea = {
+	'constitution',
+	'thermology',
+	'frost',
+	'antidotes',
+	'fitness',
+	'galvanism',
+	'philosophy',
+}
+iredata.skillFunctions.miniskills.Aetolia = {
+	'constitution',
+	'thermology',
+	'frost',
+	'antidotes',
+	'fitness',
+	'galvanism',
+	'philosophy',
+	'horsemanship',
+	'refining',
+	'psycombat'
+}
+iredata.skillFunctions.miniskills.Lusternia = {
+	
+}
 
 function iredata.skillFunctions:grouplist()
   iredata.skills.groups = {}
@@ -13,7 +40,7 @@ function iredata.skillFunctions:grouplist()
 	  iredata.skills.groups[name] = {}
 		iredata.skills.groups[name]["rank"] = skill.rank
 		table.insert(iredata.skills.groupNames, name)
-		if name ~= 'evasion' then
+		if not table.contains(iredata.skills.miniskills[iredata.game], name) then
 		  table.insert(iredata.skills.groupsToCheck, string.format([[Char.Skills.Get {"group": "%s"}]], name))
 		end
 	end

@@ -5,12 +5,7 @@ iredata.roomFunctions = iredata.roomFunctions or {}
 function iredata.roomFunctions:addItem(item)
 	local attribs = {}
 	local aText = item.attrib
-	if aText == nil then 
-	  aText = 'm'
-		if string.find(item.name, 'corpse') then 
-		  aText = aText .. 't' 
-		end
-	end
+	if aText == nil then aText = '' end
   for i=1, #aText do
     attribs[i] = aText:sub(i, i)
   end
@@ -88,6 +83,23 @@ function iredata.roomFunctions:players()
 	raiseEvent("room.players updated")
 end
 
+function iredata.roomFunctions:addplayer(event)
+  local player = iredata:getValueAt(event)
+	table.insert(iredata.room.players, player)
+	raiseEvent("room.players updated")
+end
+
+function iredata.roomFunctions:removeplayer(event)
+  local player = iredata:getValueAt(event)
+	for index,playerToCheck in ipairs(iredata.room.players) do
+	  if playerToCheck.name == player then
+		  table.remove(iredata.room.players, index)
+			raiseEvent("room.players updated")
+			return
+		end
+	end
+end
+
 if iredata.roomFunctions.eventHandlers then
   for _,handlerID in ipairs(iredata.roomFunctions.eventHandlers) do
 	  killAnonymousEventHandler(handlerID)
@@ -99,3 +111,5 @@ table.insert(iredata.roomFunctions.eventHandlers, registerAnonymousEventHandler(
 table.insert(iredata.roomFunctions.eventHandlers, registerAnonymousEventHandler("gmcp.Char.Items.Remove", "iredata.roomFunctions.riremove"))
 table.insert(iredata.roomFunctions.eventHandlers, registerAnonymousEventHandler("gmcp.Room.Info", "iredata.roomFunctions.info"))
 table.insert(iredata.roomFunctions.eventHandlers, registerAnonymousEventHandler("gmcp.Room.Players", "iredata.roomFunctions.players"))
+table.insert(iredata.roomFunctions.eventHandlers, registerAnonymousEventHandler("gmcp.Room.AddPlayer", "iredata.roomFunctions.addplayer"))
+table.insert(iredata.roomFunctions.eventHandlers, registerAnonymousEventHandler("gmcp.Room.RemovePlayer", "iredata.roomFunctions.removeplayer"))

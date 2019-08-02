@@ -21,12 +21,14 @@ function iredata.whoFunctions:players()
 	raiseEvent('players.online updated')
 end
 
-if iredata.whoFunctions.eventHandlers then
-  for _,handlerID in ipairs(iredata.whoFunctions.eventHandlers) do
-	  killAnonymousEventHandler(handlerID)
+function iredata.whoFunctions:initialize()
+	if iredata.whoFunctions.eventHandlers then
+	  for _,handlerID in ipairs(iredata.whoFunctions.eventHandlers) do
+		  killAnonymousEventHandler(handlerID)
+		end
 	end
+	iredata.whoFunctions.eventHandlers = {}
+	table.insert(iredata.whoFunctions.eventHandlers, registerAnonymousEventHandler('gmcp.Comm.Channel.Players', 'iredata.whoFunctions.players'))
+	gmod.enableModule('iredata', 'Comm.Channel')
+	iredata:sendGMCP('Comm.Channel.Players')
 end
-iredata.whoFunctions.eventHandlers = {}
-table.insert(iredata.whoFunctions.eventHandlers, registerAnonymousEventHandler('gmcp.Comm.Channel.Players', 'iredata.whoFunctions.players'))
-gmod.enableModule('iredata', 'Comm.Channel')
-iredata:sendGMCP('Comm.Channel.Players')

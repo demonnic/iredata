@@ -19,7 +19,7 @@ function iredata.taskFunctions:tasklist()
 			else
 			  table.insert(iredata.tasks.quests.current, task)
 			end
-		elseif task.type == "achievements" then
+		elseif task.type == "achievements" or task.type == "Task" or task.type == "tasks" then
 		  table.insert(iredata.tasks.achievements.all, task)
 			if not table.contains(iredata.tasks.achievements.groupNames, task.group) then
 			  table.insert(iredata.tasks.achievements.groupNames, task.group)
@@ -60,7 +60,7 @@ function iredata.taskFunctions:taskupdate()
 			table.insert(iredata.tasks.quests.complete)
 		end
 		raiseEvent("iredata.quests updated")
-	elseif task.type == "achievements" then
+	elseif task.type == "achievements" or task.type == "Task" or task.type == "tasks" then
 	  for index, taskToCheck in ipairs(iredata.tasks.achievements.groups[task.group]) do
 		  if taskToCheck.id == task.id then
 			  table.remove(iredata.tasks.achievements.groups[task.group], index)
